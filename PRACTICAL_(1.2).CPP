@@ -2,75 +2,83 @@
 
 using namespace std;
 
-const int maxproduct = 100;
+const int MAX_PRODUCTS = 100;
 
 struct Product
 {
     int id;
     string name;
     int quantity;
-    float price;
+    double price;
 };
 
-Product inventory[maxproduct];
-int productcount = 0;
-
-void addproduct(int id, string name, int quantity, float price)
-{
-    if (productcount >= maxproduct)
-    {
-        cout << "Inventory is full!!!" << endl;
-    }
-    inventory[productcount] = {id, name, quantity, price};
-    productcount++;
-    cout << "Product: " << name << " Add" << endl;
-}
-
-void updatequantity(int id, int newquantity)
-{
-    for (int i = 0; i < productcount; i++)
-    {
-        if (inventory[i].id == id)
-        {
-            inventory[i].quantity = newquantity;
-            cout << "Quantity updated!!!" << endl
-                 << "ID: " << id << endl;
-        }
-    }
-}
-int calculate_total_value()
-double total = 0;
-for (int i = 0; i < productcount; i++)
-{
-    total += inventory[i].quantity * inventory[i].price;
-}
-return total;
-}
-void display_inventory()
-{
-    cout << endl
-         << "Details of Inventory: " << endl;
-    cout << "ID\tNAME\t\tQUANTITY\tPRICE" << endl;
-    for (int i = 0; i < productcount; i++)
-    {
-        cout << inventory[i].id << "\t"
-             << inventory[i].name << "\t\t"
-             << inventory[i].quantity << "\t\t"
-             << inventory[i].price << "\t" << endl;
-    }
-}
 int main()
 {
-    addproduct(1, "IPhone", 7, 149000.00);
-    addproduct(2, "Samsung", 10, 223000.00);
-    addproduct(3, "Vivo", 5, 100000.00);
+    Product inventory[MAX_PRODUCTS];
+    int count = 0;
+    int choice;
 
-    updatequantity(3, 2);
+    do
+    {
+        cout << "1. Add Product\n";
+        cout << "2. Update Quantity\n";
+        cout << "3. Show Total Inventory Value\n";
+        cout << "4. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
 
-    display_inventory();
+        if (choice == 1)
+        {
+            if (count < MAX_PRODUCTS)
+            {
+                cout << "Enter ID: ";
+                cin >> inventory[count].id;
+                cout << "Enter Name: ";
+                cin >> inventory[count].name;
+                cout << "Enter Quantity: ";
+                cin >> inventory[count].quantity;
+                cout << "Enter Price: ";
+                cin >> inventory[count].price;
+                count++;
+            }
+            else
+            {
+                cout << "Inventory full\n";
+            }
+        }
+        else if (choice == 2)
+        {
+            int id, found = 0;
+            cout << "Enter Product ID to update: ";
+            cin >> id;
+            for (int i = 0; i < count; i++)
+            {
+                if (inventory[i].id == id)
+                {
+                    cout << "Enter new Quantity: ";
+                    cin >> inventory[i].quantity;
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                cout << "Product not found\n";
+            }
+        }
+        else if (choice == 3)
+        {
+            double total = 0;
+            for (int i = 0; i < count; i++)
+            {
+                total += inventory[i].quantity * inventory[i].price;
+            }
+            cout << "Total Inventory Value: " << total << "\n";
+        }
 
-    cout << "Total inventory value: " << calculate_total_value() << endl;
-
+    }
+    while (choice != 4);
     cout << "SHREEJAY_24CE117";
 
     return 0;
+}
