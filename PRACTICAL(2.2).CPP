@@ -33,7 +33,7 @@ public:
         return (marks[0]+marks[1]+marks[2])/3.0;
     }
 
-    void display()
+    void display() {
     cout<<"Roll number"<<roll_no<<endl;
     cout<<"Name: "<<name<<endl;
     cout<<"Marks: "<<marks[0]<<","<<marks[1]<<","<<marks[2]<<"\n";
